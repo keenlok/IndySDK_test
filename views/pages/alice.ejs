@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Alice</title>
+    <%- include('../partials/head'); %>
+    <script>
+        function createDid() {
+           alert("Creating DID")
+            $('#local_create_did').submit()
+        }
+        function createDid_ext() {
+           alert("Registering DID")
+            $('#ext_create_did').submit()
+        }
+        function create_cred_req() {
+           alert("Creating credential request")
+            $('#create_cred_request').submit()
+        }
+    </script>
+</head>
+
+<body class="container">
+<header>
+    <%- include('../partials/header'); %>
+</header>
+<main>
+    <div class="jumbotron">
+        <h1>Alice's Wallet</h1>
+        <diV class="row">
+            <div class="col">
+                <h2>DID</h2>
+                <% if (typeof did === "undefined") { %>
+                    <p> No DID found! </p>
+                    <h3>Create New DID?</h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <form type="hidden" id="local_create_did" method="post" action="/create_did">
+                                <input type="text" style="display:none" id="restaurant" name="rname">
+                            </form>
+                            <button class="btn btn-primary" id="create_did" onclick="createDid()">Create DID</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <form id="ext_create_did" method="post" action="/create_and_record">
+                                <input type="text" id="ta_did" name="ta_did">
+                            </form>
+                            <button class="btn btn-primary" id="create_did_ext" onclick="createDid_ext()">Register DID</button>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <form>
+                        <div class="form-group">
+                            <input class="form-control" id="inputdefault" type="text" value="<%= did %>" readonly>
+                        </div>
+                    </form>
+                    <% if (typeof message !== "undefined") { %>
+                    <p><%=message%></p>
+                    <% } %>
+                <% } %>
+                <h2>Keys</h2>
+                <% if (typeof key === "undefined") { %>
+                    <% key = "" %>
+                <% } %>
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" id="inputdefault" type="text" value="<%= key %>" readonly>
+                    </div>
+                </form>
+            </div>
+        </diV>
+        <h2>Transcripts</h2>
+        <div class="row">
+            <div class="col-6">
+                <h3>Transcript Request</h3>
+                <form id="create_cred_request" method="post" action="/create_cred_request">
+                    <div class="form-group">
+                        <label for="cred_id">Credential Issuer DID</label>
+                        <input class="input-lg form-control" name="cred_did" id="cred_did">
+                        <label for="cred_offer">Credential Offer</label>
+                        <textarea class="form-control" name="cred_offer" id="cred_offer" rows="5"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="create_cred_req()">Create Request</button>
+                </form>
+            </div>
+            <div class="col">
+                <% if (typeof cred_request === "undefined") { %>
+                    <% cred_request = "" %>
+                <% } %>
+                <form>
+                    <div class="form-group">
+                        <label for="cred_id">Created Request</label>
+                        <textarea class="form-control" id="createdRequest" rows="5" readonly><%=cred_request%></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

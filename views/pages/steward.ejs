@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faber</title>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="container">
+<header>
+    <%- include('../partials/header'); %>
+</header>
+<main>
+    <div class="jumbotron">
+        <h1>Steward's Wallet</h1>
+        <div class="container">
+            <% if (typeof walletid === "undefined") { %>
+                <% walletid = "NONE" %>
+            <% } %>
+            <div class="row">
+                <h3>Wallet ID:</h3>
+                <form>
+                    <div class="form-group">
+                        <input class="form-control" id="inputdefault" type="text" value="<%= walletid %>" readonly>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="container-fluid">
+                    <h2>DID</h2>
+                    <form>
+                        <div class="form-group">
+                            <input class="form-control" id="inputdefault" type="text" value="<%= did %>" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row top-buffer">
+                <div class="container-fluid">
+                    <h2>Keys</h2>
+                    <form>
+                        <div class="form-group">
+                            <input class="form-control" id="inputdefault" type="text" value="<%= key %>" readonly>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

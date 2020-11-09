@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faber - Create Transcript</title>
+    <%- include('../partials/head'); %>
+    <script>
+        function create_transcript_offer() {
+            let frm = $('#create_transcript_offer')
+            console.log("Sending data to create offer")
+            // console.log("what's this")
+            // console.log($('input[name="offer_did"]').val())
+            // frm.submit((e) => {
+            //     console.log("what's in the form?")
+            //     console.log(e)
+            //     e.preventDefault()
+            //     $.ajax({
+            //         type: 'POST',
+            //         url: '/create_offer',
+            //         data: {
+            //             offer_did: $('input[name="offer_did"]').val()
+            //         },
+            //         success: function (data) {
+            //             console.log('Submission was successful.');
+            //             console.log(data);
+            //         },
+            //         error: function (data) {
+            //             console.log('An error occurred.');
+            //             console.log(data);
+            //         },
+            //     })
+            // })
+            frm.submit()
+        }
+
+        function create_transcript() {
+            $('#create_transcript').submit()
+        }
+    </script>
+</head>
+
+<body class="container">
+<header>
+    <%- include('../partials/faber_header'); %>
+</header>
+<main>
+    <div class="jumbotron">
+        <div class="row">
+            <h4>Create New Transcript for Student</h4>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+                        <form id="create_transcript_offer" method="post" action="/create_offer">
+<!--                            <input class="input-lg form-control" name="cred_id">-->
+                            <label for="offer_did">Offer DID</label>
+                            <input class="input-lg form-control" name="offer_did">
+                            <button class="btn btn-primary" onclick="create_transcript_offer()">Create Offer</button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <% if (typeof offer === "undefined") offer = "" %>
+                        <div class="form-group">
+                            <label for="createdTranscriptOffer">Created Transcript Offer</label>
+                            <textarea class="form-control" id="createdTranscriptOffer" rows="10" readonly><%=offer%></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col">
+                            <form id="create_transcript" method="post" action="/submit_transcript">
+                                <div class="form-group">
+                                    <label for="input_did">First Name</label>
+                                    <input class="input-lg form-control" name="first_name" id="input_fn" placeholder="First Name of Student">
+                                    <label for="input_verkey">Last Name</label>
+                                    <input class="input-lg form-control" name="last_name" id="input_ln" placeholder="Last Name of Student">
+                                    <label for="input_alias">Degree</label>
+                                    <input class="input-lg form-control" name="degree" id="input_degree">
+                                    <label for="input_alias">Status</label>
+                                    <input class="input-lg form-control" name="status" id="input_status">
+                                    <label for="input_alias">SSN</label>
+                                    <input class="input-lg form-control" name="ssn" id="input_ssn">
+                                    <label for="input_alias">Year</label>
+                                    <input class="input-lg form-control" name="year" id="input_year">
+                                    <label for="input_alias">Score</label>
+                                    <input class="input-lg form-control" name="average" id="input_average">
+                                    <label for="cred_offer">Credential Offer</label>
+                                    <textarea class="form-control" name="cred_req" id="cred_req" rows="5"></textarea>
+                                    <input type="hidden" name="cred_offer" value="<%=offer%>">
+                                </div>
+                                <button class="btn btn-primary" onclick="create_transcript()">Create Transcript</button>
+                            </form>
+                            <% if (typeof message !== "undefined" && message !== null) {%>
+                            <p><%=message%></p>
+                            <% }%>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <% if (typeof credential === "undefined") credential = ""%>
+                    <div class="form-group">
+                        <label for="createdTranscript">Created Transcript</label>
+                        <textarea class="form-control" id="createdTranscript" rows="10" readonly><%=credential%></textarea>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

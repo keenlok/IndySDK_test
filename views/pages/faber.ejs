@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faber</title>
+    <%- include('../partials/head'); %>
+    <script>
+        function createDid() {
+            $('#create_did').submit()
+        }
+        function makeTrustAnchor() {
+            $('#make_verinym').submit()
+        }
+    </script>
+</head>
+
+<body class="container">
+<header>
+    <%- include('../partials/faber_header'); %>
+</header>
+<main>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-6">
+                <h1>Faber College's Wallet</h1>
+                <div class="container">
+                    <% if (typeof walletid === "undefined") { %>
+                        <% walletid = "NONE" %>
+                    <% } %>
+                    <div class="row">
+                        <h3>Wallet ID:</h3>
+                        <div class="form-group">
+                            <input class="form-control" id="inputdefault" type="text" value="<%= walletid %>" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container-fluid">
+                            <h2>DID</h2>
+                            <% if (typeof did === "undefined") { %>
+                                <p> No DID found! </p>
+                            <% } else { %>
+                                <% if (isSteward) { %>
+                                    <form>
+                                        <div class="form-group">
+                                            <input class="form-control" id="inputdefault" type="text" value="<%= did %>" readonly>
+                                        </div>
+                                    </form>
+                                <% } else { %>
+                                    <h3>DID with Steward Created</h3>
+                                    <p>Created DID:</p>
+                                    <form>
+                                        <div class="form-group">
+                                            <input class="form-control" id="inputdefault" type="text" value="<%= did %>" readonly>
+                                        </div>
+                                    </form>
+                                    <h3> Create Trust Anchor</h3>
+                                    <form type="hidden" id="make_verinym" method="post" action="/make_trust_anchor">
+                                    </form>
+                                    <button class="btn btn-primary" id="create_did" onclick="makeTrustAnchor()">Make Trust Anchor</button>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <div class="container-fluid">
+                            <h2>Keys</h2>
+                            <% if (typeof key === "undefined") { %>
+                                <% key = "" %>
+                            <% } %>
+                            <form>
+                                <div class="form-group">
+                                    <input class="form-control" id="inputdefault" type="text" value="<%= key %>" readonly>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h4>Register New DID from Faber</h4>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <form id="create_did" method="post" action="/create_did">
+                                <div class="form-group">
+                                    <label for="input_did">DID</label>
+                                    <input class="input-lg form-control" name="did" id="input_did" placeholder="Input DID of entity new DID is tied to">
+                                    <label for="input_verkey">Verkey</label>
+                                    <input class="input-lg form-control" name="verkey" id="input_verkey" placeholder="Input Verification Key">
+                                    <label for="input_alias">Alias</label>
+                                    <input class="input-lg form-control" name="alias" id="input_alias">
+                                </div>
+                            </form>
+                            <% if (typeof message !== "undefined" && message !== null) {%>
+                            <p><%=message%></p>
+                            <% }%>
+                        </div>
+                    </div>
+                    <div class="row top-buffer">
+                        <button class="btn btn-primary" id="create_did" onclick="createDid()">Create DID</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
