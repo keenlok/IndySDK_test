@@ -1,0 +1,26 @@
+{
+  "name": "basic_wallets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js prototype using the indy-sdk",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/main.js",
+    "ledger:start": "cd ../../ && docker build -f ci/indy-pool.dockerfile -t indy_pool . && docker run --name indy_pool -itd -p 9701-9708:9701-9708 indy_pool",
+    "ledger:stop": "docker stop indy_pool && docker rm indy_pool",
+    "alice": "nodemon backend/alice.js",
+    "faber": "nodemon backend/faber.js",
+    "steward": "nodemon backend/steward.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cryptiles": "^4.1.1",
+    "dpdm": "^3.5.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "home-dir": "^1.0.0",
+    "indy-sdk": "^1.11.0",
+    "mkdirp": "^0.5.1",
+    "nodemon": "^2.0.6"
+  }
+}
